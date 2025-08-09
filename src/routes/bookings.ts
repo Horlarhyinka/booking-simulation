@@ -1,12 +1,12 @@
 
 import { Router } from 'express';
-import { createBooking } from '../controllers/booking';
+import { createBooking, deleteBooking } from '../controllers/booking';
 
 const router = Router()
 
 
 router.post('/', createBooking)
-
+router.delete('/:id', deleteBooking)
 
 /**
  * @openapi
@@ -35,5 +35,25 @@ router.post('/', createBooking)
  *       201:
  *         description: New booking has been created
  */
+
+/**
+ * @openapi
+ * /bookings/{id}:
+ *   delete:
+ *     summary: Delete/Cancel booking
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Unique ID of the booking to be deleted
+ *     responses:
+ *       200:
+ *         description: Booking has been deleted
+ *       404:
+ *         description: Booking not found
+ */
+
 
 export default router

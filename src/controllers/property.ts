@@ -51,6 +51,7 @@ export const getProperties = catchAsyncErrors(async(req: Request, res: Response)
         const parsedAvailableOn = Date.parse(available_on.toString())
         const availableOnDate = new Date(parsedAvailableOn)
         const [properties, totalCount] = await propertyRepository.createQueryBuilder("property")
+            .leftJoinAndSelect("property.bookings", "booking")
             .where("property.available_from <= :availableOnDate", { availableOnDate })
             .andWhere("property.available_to >= :availableOnDate", { availableOnDate })
             .skip(size * (page - 1))
@@ -60,7 +61,7 @@ export const getProperties = catchAsyncErrors(async(req: Request, res: Response)
         return res.status(200).json({ page, size, data: properties, total: totalCount });
 
     }else{
-        const properties = await propertyRepository.find({ skip: size * page, take: size })
+        const properties = await propertyRepository.find({ skip: size * (page - 1), take: size, relations: ['bookings'] })
         const totalCount = await propertyRepository.count()
         return res.status(200).json({page, size, data: properties, total: totalCount})
     }

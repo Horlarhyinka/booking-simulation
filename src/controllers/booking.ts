@@ -72,7 +72,7 @@ export const deleteBooking = catchAsyncErrors(async(req: Request, res: Response)
     const bookingRepository = AppDataSource.getRepository(Booking);
     const booking = await bookingRepository.findOne({where: { id }})
     if(!booking) return res.status(404).json({message: 'Booking not found'})
-    await bookingRepository.delete(booking)
+    await bookingRepository.delete({id})
     return res.status(200).json(booking)
 })
 
