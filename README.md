@@ -25,6 +25,12 @@ src
 ├── routes               # API route definitions
 │   ├── bookings.ts
 │   └── properties.ts
+|__ tests                # Test files 
+|   |__ booking.test.ts
+|   |__ catchAsyncErrors.test.ts
+|   |__ property.test.ts
+|   |__ validator.test.ts
+|
 └── index.ts             # Application entry point
 ```
 
