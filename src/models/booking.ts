@@ -12,7 +12,7 @@ export class Booking {
     property_id!: Property;
 
     @Column()
-    username!: string;
+    user_name!: string;
 
     @Column()
     start_date!: Date;

@@ -13,15 +13,15 @@ export const addProperty = catchAsyncErrors(async(req: Request, res: Response)=>
         return
     }
 
-    const from = DateTime.fromISO(req.body.available_from);
-    const to = DateTime.fromISO(req.body.available_to);
+    const from = DateTime.fromISO(req.body.available_from, { zone: 'utc' });
+    const to = DateTime.fromISO(req.body.available_to, { zone: 'utc' });
 
     if (!from.isValid || !to.isValid) {
     return res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD' });
     }
 
-    const availableFromDate = DateTime.fromISO(req.body.available_from, { zone: 'utc' }).toJSDate();
-    const availableToDate = DateTime.fromISO(req.body.available_to, { zone: 'utc' }).toJSDate();
+    const availableFromDate = from.toJSDate();
+    const availableToDate = to.toJSDate();
 
 
     if(!availableFromDate)return res.status(400).json({message: 'available from date is not valid'})
@@ -92,7 +92,7 @@ export const getPropertyAvailability = catchAsyncErrors(async(req: Request, res:
         const sorted_bookings = [...property.bookings].sort((a,b)=>a.start_date.getTime() - b.start_date.getTime())
         for(let i = 0; i < sorted_bookings.length; i++){
             const booking = sorted_bookings[i]
-            if(last_stop != booking.start_date && i != sorted_bookings.length -1){ //this prevents repetition of consecutive bookings in the range e.g [{from: 01-01-2025, to: 02-01-2025}, {from: 02-01-2025, to: 03-01-2025}, ]  instead of simply [{from: 01-01-2025, to: 03-01-2025}, ]
+            if(last_stop.getTime() != booking.start_date.getTime() && i != sorted_bookings.length -1){ //this prevents repetition of consecutive bookings in the range e.g [{from: 01-01-2025, to: 02-01-2025}, {from: 02-01-2025, to: 03-01-2025}, ]  instead of simply [{from: 01-01-2025, to: 03-01-2025}, ]
                 last_stop = booking.end_date
                 continue;
             }

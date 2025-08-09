@@ -10,6 +10,7 @@ import swaggerSpec from './config/swagger';
 import { envVars } from './config/envvars';
 
 import propertyRouter from './routes/properties';
+import bookingRouter from './routes/bookings';
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.use(helmet())
 
 app.use('/api/docs', swaggerui.serve, swaggerui.setup(swaggerSpec));
 app.use('/api/properties', propertyRouter)
+app.use('/api/bookings', bookingRouter)
 
 async function start(){
     try{
