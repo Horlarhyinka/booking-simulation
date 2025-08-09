@@ -5,22 +5,22 @@ import { v4 as uuidv4 } from 'uuid';
 @Entity()
 export class Booking {
 
-    @PrimaryColumn()
+    @PrimaryColumn('uuid')
     id: string = uuidv4();
 
     @ManyToOne(()=>Property, (b)=>b.bookings)
     property_id!: Property;
 
-    @Column()
+    @Column('string')
     user_name!: string;
 
-    @Column()
+    @Column('date')
     start_date!: Date;
 
-    @Column()
+    @Column('date')
     end_date!: Date;
 
-    @CreateDateColumn()
+    @CreateDateColumn('date')
     created_at!: Date;
 
     

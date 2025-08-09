@@ -5,28 +5,28 @@ import { Booking } from "./booking";
 
 @Entity()
 export class Property{
-    @PrimaryColumn()
+    @PrimaryColumn('uuid')
     id: string = uuidv4();
 
-    @Column()
+    @Column('string')
     title!: string;
 
-    @Column()
+    @Column('string')
     description!: string;
 
-    @Column()
+    @Column('float')
     price_per_night!: string;
 
-    @Column()
+    @Column('date')
     available_from!: Date;
 
-    @Column()
+    @Column('date')
     available_to!: Date;
 
     @OneToMany(()=>Booking, (b)=>b.property_id)
     bookings!: Booking[];
 
-    @CreateDateColumn()
+    @CreateDateColumn('date')
     created_at!: Date;
 }
 

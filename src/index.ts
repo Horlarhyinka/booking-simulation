@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import express from 'express';
 import swaggerui from 'swagger-ui-express';
 import http from 'http';
@@ -11,6 +13,7 @@ import { envVars } from './config/envvars';
 
 import propertyRouter from './routes/properties';
 import bookingRouter from './routes/bookings';
+
 
 const app = express()
 
